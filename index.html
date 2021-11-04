@@ -1,0 +1,27 @@
+<input id="input" type="text" />
+<button onclick="send()">Send</button>
+<p id="sts">Not Connected</p>
+<pre id="msg"></pre>
+<script>
+    var input = document.getElementById("input");
+    var sts = document.getElementById("sts");
+    var msg = document.getElementById("msg");
+    // console.log(sts, msg)
+    var socket = new WebSocket("ws://"+window.location.host+"/api");
+
+    socket.onopen = function () {
+        // console.log("Connected");
+        // console.log(sts.innerHTML)
+        sts.innerHTML = "Connected";
+    };
+
+    socket.onmessage = function (e) {
+        sts.innerHTML = "Message";
+        msg.innerHTML += "> " + e.data.toUpperCase() + "\n";
+    };
+
+    function send() {
+        socket.send(input.value);
+        input.value = "";
+    }
+</script>
