@@ -33,13 +33,9 @@ func api(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func static(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
-}
-
 func main() {
 	http.HandleFunc("/api", api)
-	http.HandleFunc("/", static)
+	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
 
 	http.ListenAndServe(":8080", nil)
 }
