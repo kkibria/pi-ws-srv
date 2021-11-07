@@ -1,1 +1,1 @@
-# A websocket server for pi in go
+# A websocket server for pi with go
